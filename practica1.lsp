@@ -8,7 +8,7 @@
 )
 
 ;
-(defun inicia-patrons-prima ()
+(defun inicia-patrons-prisma ()
     nil
 )
 
@@ -61,10 +61,10 @@
 ;'escena'. 
 ;--- Paramametres ---
 ;@n nom
-;@f figura
+;@p patró
 ;@c color
-(defun crea-figura (n f c)
-    (putprop n f 'patro)
+(defun crea-figura (n p c)
+    (putprop n p 'patro)
     (putprop n c 'color)
     ;MATRIZ TRANSFORMACIO
     (putprop n '(
@@ -86,13 +86,30 @@
     nil
 )
 ;borra tot el contingut de l'escena (i de la pantalla)
-(defun borra-figures
+(defun borra-figures ()
     nil
+)
+
+; pinta totes les figures de la llista de figures de l'escena
+(defun pinta-figures ()
+    (car (get (get (car (get 'escena 'figures)) 'patro) 'arestes))
+
 )
 
 ;dibuixa la figura f. A partir de les seves cares, s'han d'agafar les arestes i
 ;dibuixar-les. Per pintar, basta considerar les coordenades x i y de cada punt, la z no s'ha
 ;d'utilitzar més que pels càlculs 3D.
 (defun pinta-figura (f)
-    nil
+    ;(get (get '(car (get 'escena 'figures)) 'patro) 'punts)
+    ;(get 'escena 'figures)
+    (cerca-figura f (get 'escena 'figures))
+    ; de la primera figura, cojo su patron, y con su patron cojo sus puntos
+)
+
+(defun cerca-figura (f l) ; Aquest mètode cercarà una figura concreta de tota l'escena
+    (cond 
+        ((null l)  nil) ; si no hay ninguna figura, retorna nil
+        ((= f (car l)) (car l))
+        (t (cerca-figura f (cdr l)))
+    )
 )
