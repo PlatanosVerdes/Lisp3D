@@ -102,7 +102,7 @@
 )
 (borra 'a '(1 2 a 3 a b c))
 
-;Borrar todos los elementos:
+;Borrar todos los elementos iguales de la lista:
 (defun borra (e l)
     (cond
         ;Caso base
@@ -194,6 +194,7 @@
 
 ;------------------------ PROPIETATS ---------------------------
 ;               (putprop àtom valor propietat)
+;---------------------------------------------------------------
 
 
 ; Ejer 25/03/2022:
@@ -203,7 +204,7 @@
 (defun invertir (l)
     (cond 
         ((null l) nil)
-        (t (append (invertir (cdr l))  (list (cdr l)) ))
+        (t (append (invertir (cdr l)) (list (cdr l)) ))
     )
 )
 

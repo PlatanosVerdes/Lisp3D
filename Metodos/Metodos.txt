@@ -1,6 +1,19 @@
-1. (inicia-patrons):
-2. (crea-figura nom patró color): HECHO
-3. (borra-figura f): 
+-----------------------------------------------------------
+METODOS EXTRA
+-----------------------------------------------------------
+
+(getlFigures): Retorna la llista de figures de l'escena
+(setFigures (e)): Posa un element/llista a la propietat de figures 
+
+
+
+
+-----------------------------------------------------------
+LISTA DE METODOS POR HACER
+-----------------------------------------------------------
+1. (inicia-patrons):                ✅
+2. (crea-figura nom patró color):   ✅
+3. (borra-figura f):                ✅
 4. (cls-figura f): 
 5. (borra-figures):
 6. (pinta-figura f): 
@@ -30,8 +43,8 @@ Juan Carlos:
 - (escala-figura f x y z)
 
 Jorge:
-- (inicia-patrons)
-- (borra-figura f)
+- (inicia-patrons) ✅
+- (borra-figura f) ✅
 - (borra-figures)
 - (cls-figura f)
 - (inicia-figura f)
