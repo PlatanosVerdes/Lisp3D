@@ -4,7 +4,9 @@ METODOS EXTRA
 
 (getlFigures): Retorna la llista de figures de l'escena
 (setFigures (e)): Posa un element/llista a la propietat de figures 
-
+(producteEscalar v1 v2): Retorna el producte escalar de dos vectors
+(get-n n l): Retorna l'element enèssim d'una llista l
+(add-at-end x l): Afegueix l'element x al final de la llista l
 
 
 

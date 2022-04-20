@@ -19,10 +19,15 @@
 
 ;inIt Metodo temporal que crea figuras
 (defun init ()
+    (cls) ; per netejar la pantalla cada pic que executam una instrucció
     (inicia-patrons)
     (crea-figura 'cub1 'cub '(255 0 0))
     (crea-figura 'cub2 'cub '(255 0 0))
-    ;(pinta-figura 'cub1)
+    (crea-figura 'prisma1 'prisma '(255 0 0))
+    (crea-figura 'octaedre1 'octaedre '(72 39 155))
+    (pinta-figura 'cub1)
+    ;(pinta-figura 'prisma1)
+    ;(pinta-figura 'octaedre1)
     ;(pinta-figura 'cub2)
 )
 
@@ -38,12 +43,12 @@
 (defun inicia-patrons-prisma ()
     ;Punts
     (putprop 'prisma '(
-        (-0.5 -1 0)         ;1
-        (0.5 -1 0)          ;2
-        (0 -1 -1)           ;3
-        (-0.5 -1 0)         ;4
-        (0.5 1 0)           ;5
-        (0 1 -1))           ;6
+        (-20 -40 0)         ;1
+        (20 -40 0)          ;2
+        (0 -40 -40)           ;3
+        (-20 -40 0)         ;4
+        (20 40 0)           ;5
+        (0 40 -40))           ;6
     'punts)
     ;Arestes
     (putprop 'prisma '(
@@ -71,12 +76,12 @@
 (defun inicia-patrons-octaedre ()
     ;Punts
     (putprop 'octaedre '(
-        (-0.5 0 0.5)    ;1
-        (0.5 0 0.5)     ;2
-        (0.5 0 -0.5)    ;3
-        (-0.5 0 -0.5)   ;4
-        (0 -1 0)        ;5
-        (0 1 0))        ;6
+        (-20 0 20)    ;1
+        (20 0 20)     ;2
+        (20 0 -20)    ;3
+        (-20 0 -20)   ;4
+        (0 -40 0)        ;5
+        (0 40 0))        ;6
     'punts)
     ;Arestes
     (putprop 'octaedre '(
@@ -110,14 +115,14 @@
 (defun inicia-patrons-cub ()
     ;Punts
     (putprop 'cub '(
-        (-0.5 -0.5 0.5)     ;1
-        (0.5 -0.5 0.5)      ;2
-        (0.5 -0.5 -0.5)     ;3
-        (-0.5 -0.5 -0.5)    ;4
-        (-0.5 0.5 0.5)      ;5
-        (0.5 0.5 0.5)       ;6
-        (0.5 0.5 -0.5)      ;7
-        (-0.5 0.5 -0.5))    ;8
+        (-20 -20 20)     ;1
+        (20 -20 20)      ;2
+        (20 -20 -20)     ;3
+        (-20 -20 -20)    ;4
+        (-20 20 20)      ;5
+        (20 20 20)       ;6
+        (20 20 -20)      ;7
+        (-20 20 -20))    ;8
     'punts)
     ;Arestes
     (putprop 'cub '(
@@ -213,55 +218,73 @@
 
 )
 
-;dibuixa la figura f. A partir de les seves cares, s'han d'agafar les arestes i
-;dibuixar-les. Per pintar, basta considerar les coordenades x i y de cada punt, la z no s'ha
-;d'utilitzar més que pels càlculs 3D.
+; PATRÓ CUB:
+; CARES ((1 6 9 5);1 (2 7 10 6);2 (3 8 11 7);3 (4 5 12 8);4 (1 2 3 4);5 (9 10 11 12);6)
+; ARESTES ((1 2);1 (2 3);2 (3 4);3 (4 1);4 (1 5);5 (2 6);6 (3 7);7 (4 8);8 (5 6);9 (6 7);10 (7 8);11 (8 5);12) 
+; PUNTS  (-0.5 -0.5 0.5);1 (0.5 -0.5 0.5);2 (0.5 -0.5 -0.5);3 (-0.5 -0.5 -0.5);4 (-0.5 0.5 0.5);5 (0.5 0.5 0.5);6 (0.5 0.5 -0.5);7 (-0.5 0.5 -0.5));8
 
 ;Dibuixa una figura de les que han estat creades
 ;--- Paràmetres ---
 ;@f figura
 (defun pinta-figura (f)
-    ;(get (get '(car (get 'escena 'figures)) 'patro) 'punts)
-    ;(get 'escena 'figures)
-    ;(get (cerca-figura f (get 'escena 'figures)) 'patro)
-    (pinta-cares (get (get (cerca-figura f (get 'escena 'figures)) 'patro) 'cares) (get (cerca-figura f (get 'escena 'figures)) 'patro))
-
+    ;(pinta-cares (get (get (cerca-figura f (get 'escena 'figures)) 'patro) 'cares) (get (cerca-figura f (get 'escena 'figures)) 'patro))
+    ;(color (get f 'color))
+    (eval (cons 'color (get f 'color))) ; pintam del color que toca la figura
+    (pinta-cares (get (get f 'patro) 'cares) (get f 'patro))
+    (color 0 0 0) 
 )
 
+; Recorr totes les cares pintant totes les arestes
 (defun pinta-cares (l p)
     (cond
         ((null l) nil)
         (t  
-            (pinta-arestes (car l) p) ; ((1 6 9 5);1 (2 7 10 6);2 (3 8 11 7);3 (4 5 12 8);4 (1 2 3 4);5 (9 10 11 12);6)
-            ;(pinta-cares (cdr l) p) ; pinta la seguent cara
+            (pinta-arestes (car l) p) ; pinta les arestes de la cara
+            (pinta-cares (cdr l) p) ; pinta la següent cara
         )
     )
 )
 
-(defun pinta-arestes (l p);((1 2);1 (2 3);2 (3 4);3 (4 1);4 (1 5);5 (2 6);6 (3 7);7 (4 8);8 (5 6);9 (6 7);10 (7 8);11 (8 5);12)  
+; Recorr totes les arestes pintant tots els vèrtexs
+(defun pinta-arestes (l p) 
     (cond
         ((null l) nil)
         (t  
-            ;(print (get p 'arestes))
-            ;(print l)
-            ;(print (car l))
-            (pinta-vertexs (get-n (car l) (get p 'arestes)) p)
-            ;(print (cadr l))
-            ;(print (caadr l))
-            ;(print (caaadr l))
-            (pinta-arestes (cdr l) p)
+            (pinta-vertexs (get-n (car l) (get p 'arestes)) p) ; pinta els vèrtexs de l'aresta
+            (pinta-arestes (cdr l) p) ; pinta la següent aresta
         )
     )
 )
 
+; Pinta tots els vèrtexs
 (defun pinta-vertexs (l p)
     (cond 
         ((null l) nil)
         (t
-            (print l)
-            (print (get-n (car l) (get p 'punts)))
-            (print (get-n (cadr l) (get p 'punts)))
+            ;(print l)
+            (move (+ 320 (car (get-n (car l) (get p 'punts))))  (+ 187 (cadr (get-n (car l) (get p 'punts)))) ) ; posicionam el cursor al primer vèrtex
+            (draw (+ 320 (car (get-n (cadr l) (get p 'punts)))) (+ 187 (cadr (get-n (cadr l) (get p 'punts)))) ) ; dibuixam l'aresta fins al segon vèrtex
         )
+    )
+)
+
+; para pruebas: (vertexPerTransformada '(1) '((3 2) (3 4) (5 6) (7 8)))
+; Multiplica el vertex per la matriu transformada (necessari per dibuixar les figures)
+(defun vertexPerTransformada (v mt)
+    ;(add-at-end 1 v) ; necessari per multiplicar el vèrtex (1x4) per la matriu transformada (4x4)
+    ;(cons (producteEscalar (add-at-end 1 v) (get-n 1 mt)) (cons (producteEscalar (add-at-end 1 v) (get-n 2 mt)) 
+    (cons (producteEscalar (add-at-end 1 v) (get-n 3 mt)) (producteEscalar (add-at-end 1 v) (get-n 4 mt)));))
+)
+
+;Calcula el producte escalar de dos vectors donats
+;--- Paràmetres ---
+;@v1 vector1
+;@v2 vector2
+(defun producteEscalar (v1 v2)
+    (cond 
+        ((null v1) 0)
+        (t (+ (* (car v1) (car v2)) (producteEscalar (cdr v1) (cdr v2)) ))
+    
     )
 )
 
@@ -269,12 +292,20 @@
 ;--- Paràmetres ---
 ;@f figura
 ;@l llista
-(defun cerca-figura (f l)
+(defun cerca-figura (f l) ; NO SE UTILIZA AL FINAL (NO BORRAR AUN PORSIACA)
     (cond 
         ((null l)  nil)
         ((EQUAL f (car l)) (car l))
         (t (cerca-figura f (cdr l)))
     )
+)
+
+;Afegueix un element al final d'una llista
+;--- Paràmetres ---
+;@x element
+;@l llista
+(defun add-at-end (x l)
+    (reverse (cons x (reverse l)))
 )
 
 ;Retorna l'enèssim element d'una llista
