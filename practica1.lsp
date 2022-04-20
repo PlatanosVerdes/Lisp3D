@@ -1,4 +1,7 @@
-;Autors: Juan Carlos Bujosa (PONED LOS VUESTROS PUTOS)
+;PRACTICA LISP - L.P.
+;Autors: Juan Carlos Bujosa, Jorge González Pascual, Zhuo Han Yang (杨桌涵)
+;Load: (load 'practica1)
+
 ;Crearà els àtoms pel cub, prisma i octaedre amb totes les seves propietats
 (defun inicia-patrons ()
     (inicia-patrons-cub)
@@ -7,12 +10,32 @@
     ;(putprop 'escena nil 'figures)
 )
 
-;
+;Initzalitza un Prima
 (defun inicia-patrons-prisma ()
-    nil
+    ;Punts
+    (putprop 'prisma '(
+        (-0.5 -1 0)         ;1
+        (0.5 -1 0)          ;2
+        (0 -1 -1)           ;3
+        (-0.5 -1 0)         ;4
+        (0.5 1 0)           ;5
+        (0 1 -1))           ;6
+    'punts)
+    ;Arestes
+    (putprop 'prisma '(
+        (1 2)   ;1
+        (2 3)   ;2
+        (3 1)   ;3
+        (1 4)   ;4
+        (2 5)   ;5
+        (3 6)   ;6
+        (4 5)   ;7
+        (5 6)   ;8
+        (6 4))  ;9
+    'arestes)
 )
 
-;
+;Initzalitza un Octaedre
 (defun inicia-patrons-octaedre ()
     nil
 )
@@ -66,50 +89,51 @@
 (defun crea-figura (n p c)
     (putprop n p 'patro)
     (putprop n c 'color)
-    ;MATRIZ TRANSFORMACIO
+    ;Matriuu Transformacio
     (putprop n '(
         (1 0 0 0)
         (0 1 0 0)
         (0 0 1 0)
         (0 0 0 1))
     'tmatriz)
-    ;RECUPERAR LA LISTA DE FIGURAS Y PONERLA LA NUEVA
+    ;Recuperar la llista de figures i posar la nova
     (putprop 'escena (cons n (get 'escena 'figures)) 'figures)
 )
 
-;borra la figura f de l'escena (i de la pantalla)
+;Borra la figura f de l'escena (i de la pantalla)
 (defun borra-figura (f)
     nil
 )
-;borra la figura f només de la pantalla
+;Borra la figura f només de la pantalla
 (defun cls-figura (f)
     nil
 )
-;borra tot el contingut de l'escena (i de la pantalla)
+;Borra tot el contingut de l'escena (i de la pantalla)
 (defun borra-figures ()
     nil
 )
 
-; pinta totes les figures de la llista de figures de l'escena
+;Pinta totes les figures de la llista de figures de l'escena
 (defun pinta-figures ()
     (car (get (get (car (get 'escena 'figures)) 'patro) 'arestes))
 
 )
 
-;dibuixa la figura f. A partir de les seves cares, s'han d'agafar les arestes i
+;Dibuixa la figura f. A partir de les seves cares, s'han d'agafar les arestes i
 ;dibuixar-les. Per pintar, basta considerar les coordenades x i y de cada punt, la z no s'ha
 ;d'utilitzar més que pels càlculs 3D.
 (defun pinta-figura (f)
     ;(get (get '(car (get 'escena 'figures)) 'patro) 'punts)
     ;(get 'escena 'figures)
-    (cerca-figura f (get 'escena 'figures))
+    (get (cerca-figura f (get 'escena 'figures)) 'patro)
     ; de la primera figura, cojo su patron, y con su patron cojo sus puntos
 )
 
-(defun cerca-figura (f l) ; Aquest mètode cercarà una figura concreta de tota l'escena
+;Aquest mètode cercarà una figura concreta de tota l'escena
+(defun cerca-figura (f l) 
     (cond 
         ((null l)  nil) ; si no hay ninguna figura, retorna nil
-        ((= f (car l)) (car l))
+        ((EQUAL f (car l)) (car l))
         (t (cerca-figura f (cdr l)))
     )
 )

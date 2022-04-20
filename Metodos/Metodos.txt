@@ -1,0 +1,37 @@
+1. (inicia-patrons):
+2. (crea-figura nom patró color): HECHO
+3. (borra-figura f): 
+4. (cls-figura f): 
+5. (borra-figures):
+6. (pinta-figura f): 
+7. (pinta-figures): 
+8. (translacio dx dy dz):
+9. (escalat ex ey ez):
+10. (rotax a):
+11. (rotay a): 
+12. (rotaz a):
+13. (trasllada-figura f x y z): 
+14. (rota-figura f x y z):
+15. (escala-figura f x y z): 
+16. (inicia-figura f): 
+
+Alberto:
+- (translacio dx dy dz)
+- (escalat ex ey ez)
+- (rotax a) 
+- (rotay a)
+- (rotaz a)
+
+Juan Carlos:
+- (pinta-figura f)
+- (pinta-figures)
+- (trasllada-figura f x y z)
+- (rota-figura f x y z)
+- (escala-figura f x y z)
+
+Jorge:
+- (inicia-patrons)
+- (borra-figura f)
+- (borra-figures)
+- (cls-figura f)
+- (inicia-figura f)
