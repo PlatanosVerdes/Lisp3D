@@ -10,7 +10,6 @@ METODOS EXTRA
 - (vector-per-matriu):          Multiplica un vector per una matriu
 - (pinta-llista-figures):       Pinta totes les figures que es passen per paràmetre
 - (pertany e l):                Mirar si un elemento pertany a una llista
-- (change-color-route n c l):   Fa un recorregut en la llista de figures i si el troba el canvia el color
 - (change-color f c):           Canvia el color de la figura
 - (borra-f f l):                Borra un elemento de una lista
 
@@ -30,10 +29,10 @@ LISTA DE METODOS POR HACER
 10. (rotax a):                      ✅
 11. (rotay a):                      ✅
 12. (rotaz a):                      ✅
-13. (trasllada-figura f x y z): 
-14. (rota-figura f x y z):
-15. (escala-figura f x y z): 
-16. (inicia-figura f): 
+13. (trasllada-figura f x y z):     ✅
+14. (rota-figura f x y z):          ✅
+15. (escala-figura f x y z):        ✅
+16. (inicia-figura f):              ✅
 -----------------------------------------------------------
 Alberto:
 - (translacio dx dy dz)             ✅
@@ -43,15 +42,18 @@ Alberto:
 - (rotaz a)                         ✅
 
 Juan Carlos:
-- (pinta-figura f) ✅
-- (pinta-figures)  ✅
-- (trasllada-figura f x y z)
-- (rota-figura f x y z)
-- (escala-figura f x y z)
+- (pinta-figura f)                  ✅
+- (pinta-figures)                   ✅
+- (trasllada-figura f x y z)        ✅    
+- (rota-figura f x y z)             ✅
+- (escala-figura f x y z)           ✅    
 
 Jorge:
 - (inicia-patrons)      ✅
 - (borra-figura f)      ✅ 
 - (borra-figures)       ✅
 - (cls-figura f)        ✅
-- (inicia-figura f)     
+- (inicia-figura f)     ✅
+
+DUDAS:
+- En cls-figura, tenemos que mirar si existe la figura? Y asi con todos los metodos?

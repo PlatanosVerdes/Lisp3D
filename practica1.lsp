@@ -25,8 +25,8 @@
     (crea-figura 'cub1 'cub '(0 0 0))
     (crea-figura 'prisma1 'prisma '(255 0 0))
     (crea-figura 'octaedre1 'octaedre '(72 39 155))
-    ;(pinta-figura 'cub1)
-    (pinta-figures)
+    (pinta-figura 'cub1)
+    ;(pinta-figures)
     ;(pinta-llista-figures '(cub1 prisma1))
     ;(pinta-figura 'prisma1)
     ;(pinta-figura 'octaedre1)
@@ -190,21 +190,6 @@
     )
 )
 
-;Fa un recorregut en la llista de figures i si el troba el canvia el color
-;--- Paramametres ---
-;@n nom
-;@c color
-;@l llista
-(defun change-color-route (n c l) 
-    (cond 
-        ((null (get-figures)) nil)
-        ((equal n (car (get-figures))) 
-            (change-color n c)
-        )
-        (t (change-color-route n c (cdr (get-figures)) )) 
-    )
-)
-
 ;Canvia el color de la figura
 ;--- Paramametres ---
 ;@n nom
@@ -212,6 +197,18 @@
 (defun change-color (n c)
     (putprop n c 'color)
     (pinta-figura n)
+)
+
+;Posa la figura f a la seva posició inicial (matriu identitat a la transformació) 
+;--- Paramametres ---
+;@f nom de la figura
+(defun inicia-figura (f) 
+    (putprop f '(
+        (1 0 0 0)
+        (0 1 0 0)
+        (0 0 1 0)
+        (0 0 0 1))
+    'tmatriu)
 )
 
 ;Borra la figura f de l'escena (i de la pantalla)
@@ -245,7 +242,9 @@
 
 ;Borra la figura f només de la pantalla
 (defun cls-figura (f)
-    (change-color f '(255 255 255))
+    (color 255 255 255)
+    (pinta-cares (get (get f 'patro) 'cares) (get f 'patro) f)
+    (color 0 0 0)
 )
 ;Borra tot el contingut de l'escena (i de la pantalla)
 (defun borra-figures ()
@@ -327,13 +326,13 @@
             
             ;Posicionam el cursor al primer vèrtex
             (move 
-                (+ 320 (car (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))   ;Ax
-                (+ 187 (cadr (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))  ;Ay
+                (+ 320 (realpart (round (car (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))))   ;Ax
+                (+ 187 (realpart (round (cadr (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))))  ;Ay
             ) 
             ;Dibuixam l'aresta fins al segon vèrtex
             (draw 
-                (+ 320 (car (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu))))  ;Bx
-                (+ 187 (cadr (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu)))) ;By
+                (+ 320 (realpart (round (car (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu))))))   ;Bx
+                (+ 187 (realpart (round (cadr (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu))))))  ;By
             ) 
         )
     )
@@ -461,7 +460,7 @@
 ;--- Paramametres ---
 ;@a angulo en radianes
 
-(defun rotaz (a) 
+(defun rotaz (a)
     (list 
     (list (cos a) (sin a) 0 0)
     (list (- (sin a)) (cos a) 0 0)
@@ -469,8 +468,81 @@
     (list 0 0 0 1))
 )
 
+;Función para calcular la nueva posición de la figura según sus parametros
+;--- Paramametres ---
+;@f objeto a ser cambiado
+;@x Movimiento en eje x
+;@y Movimiento en eje y
+;@z Movimiento en eje z
+
 (defun trasllada-figura (f x y z)
-   (ACTUALIZAR 'TMATRIU DE F (MULTIPLICAR MATRIZ (get f 'tmatriu) (TRANSLACIO XXX) ))
+    (putprop f (multiplica-matriz (get f 'tmatriu) (translacio x y z)) 'tmatriu)
 )
 
-(defun multiplica-matriz ())
+;Función para calcular la nueva posición en rotación de la figura según sus parametros
+;--- Paramametres ---
+;@f objeto a ser cambiado
+;@x rotación en eje x
+;@y rotación en eje y
+;@z rotación en eje z
+
+(defun rota-figura (f x y z)
+    (putprop f (multiplica-matriz
+        (multiplica-matriz
+            (multiplica-matriz (get f 'tmatriu) (rotax x)) 
+        (rotay y)) 
+    (rotaz z)) 'tmatriu)
+)
+
+;Función para calcular la nueva dimensión de la figura según sus parametros
+;--- Paramametres ---
+;@f objeto a ser cambiado
+;@x variación de tamaño x
+;@y variación de tamaño y
+;@z variación de tamaño z
+
+(defun escala-figura (f x y z)
+    (putprop f (multiplica-matriz (get f 'tmatriu) (escalat x y z)) 'tmatriu)
+)
+
+;Función que permite multiplicar matrices del mismo tamaño entre ellas
+;--- Paramametres ---
+;@m1 matriz de transformación del objeto
+;@m matriz de cambio con la nueva configuración
+
+(defun multiplica-matriz (m1 m2)
+    (cond 
+        ((null (car m1)) nil)
+        (t (cons (vector-matriu (car m1) m2) (multiplica-matriz (cdr m1) m2)))
+    )
+)
+
+;Función que permite multiplicar un vector con una matriz
+;--- Paramametres ---
+;@v vector del objeto
+;@m matriz de cambio con la nueva configuración
+
+(defun vector-matriu (v m) 
+    (cond 
+        ((null (car m)) nil)
+        (t (cons (sum-list (mapcar '* v (car m))) (vector-matriu v (cdr m)))))
+)
+
+;Función que suma todos los componentes de una lista
+;--- Paramametres ---
+;@l lista
+(defun sum-list (l)
+    (cond ((null (car l)) 0)
+            (t (+ (car l) (sum-list (cdr l)))))
+)
+
+
+;Función de prueba, funciona con matrices que se pasen directamente por parametro
+
+
+;(defun multiplica-matriu (f m)
+;    (cond 
+;        ((null (car f)) nil)
+;        (t  (cons (vector-matriu (car f) m) (multiplica-matriu (cdr f) m)))
+;    )
+;)
