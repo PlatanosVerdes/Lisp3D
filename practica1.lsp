@@ -190,18 +190,28 @@
     )
 )
 
+;Fa un recorregut en la llista de figures i si el troba el canvia el color
+;--- Paramametres ---
+;@n nom
+;@c color
+;@l llista
+(defun change-color-route (n c l) 
+    (cond 
+        ((null (get-figures)) nil)
+        ((equal n (car (get-figures))) 
+            (change-color n c)
+        )
+        (t (change-color-route n c (cdr (get-figures)) )) 
+    )
+)
+
 ;Canvia el color de la figura
 ;--- Paramametres ---
 ;@n nom
 ;@c color
-(defun change-color (f c)
-    (cond
-        ;Si no existeix es crea de nova
-        ( (not (null (pertany f (get-figures))) ) 
-            (putprop f c 'color)
-            (pinta-figura f)
-        )
-    )
+(defun change-color (n c)
+    (putprop n c 'color)
+    (pinta-figura n)
 )
 
 ;Borra la figura f de l'escena (i de la pantalla)
