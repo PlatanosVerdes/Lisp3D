@@ -22,10 +22,12 @@
     (cls) ; per netejar la pantalla cada pic que executam una instrucció
     (inicia-patrons)
     (crea-figura 'cub1 'cub '(255 0 0))
-    (crea-figura 'cub2 'cub '(255 0 0))
+    (crea-figura 'cub1 'cub '(0 0 0))
     (crea-figura 'prisma1 'prisma '(255 0 0))
     (crea-figura 'octaedre1 'octaedre '(72 39 155))
-    (pinta-figura 'cub1)
+    ;(pinta-figura 'cub1)
+    (pinta-figures)
+    ;(pinta-llista-figures '(cub1 prisma1))
     ;(pinta-figura 'prisma1)
     ;(pinta-figura 'octaedre1)
     ;(pinta-figura 'cub2)
@@ -45,10 +47,10 @@
     (putprop 'prisma '(
         (-20 -40 0)         ;1
         (20 -40 0)          ;2
-        (0 -40 -40)           ;3
-        (-20 -40 0)         ;4
+        (0 -40 -40)         ;3
+        (-20 40 0)          ;4
         (20 40 0)           ;5
-        (0 40 -40))           ;6
+        (0 40 -40))         ;6
     'punts)
     ;Arestes
     (putprop 'prisma '(
@@ -76,12 +78,12 @@
 (defun inicia-patrons-octaedre ()
     ;Punts
     (putprop 'octaedre '(
-        (-20 0 20)    ;1
-        (20 0 20)     ;2
-        (20 0 -20)    ;3
-        (-20 0 -20)   ;4
-        (0 -40 0)        ;5
-        (0 40 0))        ;6
+        (-20 0 20)      ;1
+        (20 0 20)       ;2
+        (20 0 -20)      ;3
+        (-20 0 -20)     ;4
+        (0 -40 0)       ;5
+        (0 40 0))       ;6
     'punts)
     ;Arestes
     (putprop 'octaedre '(
@@ -158,64 +160,106 @@
 ;@p patró
 ;@c color
 (defun crea-figura (n p c)
-    (putprop n p 'patro)
-    (putprop n c 'color)
-    ;Matriu Transformacio
-    (putprop n '(
-        (1 0 0 0)
-        (0 1 0 0)
-        (0 0 1 0)
-        (0 0 0 1))
-    'tmatriu)
-    ;Recuperar la llista de figures i posar la nova (per no sobreescriure)
-    ;(putprop 'escena (cons n (getlFigures)) 'figures)
-    (setFigures (cons n (getlFigures)))
+    (cond
+        ;Si no existeix es crea de nova
+        ((null (pertany n (get-figures))) 
+                (putprop n p 'patro)
+                (putprop n c 'color)
+                ;Matriu Transformacio
+                (putprop n '(
+                    (1 0 0 0)
+                    (0 1 0 0)
+                    (0 0 1 0)
+                    (0 0 0 1))
+                'tmatriu)
+                ;Recuperar la llista de figures i posar la nova (per no sobreescriure)
+                (set-figures (cons n (get-figures)))
+        )
+    )
+)
+
+;Mirar si un elemento pertany a una llista
+;--- Paramametres ---
+;@e element
+;@l llista
+(defun pertany (e l) 
+    (cond 
+        ((null l) nil)
+        ((equal e (car l)) t)
+        (t (pertany e (cdr l) )) 
+    )
+)
+
+;Canvia el color de la figura
+;--- Paramametres ---
+;@n nom
+;@c color
+(defun change-color (f c)
+    (cond
+        ;Si no existeix es crea de nova
+        ( (not (null (pertany f (get-figures))) ) 
+            (putprop f c 'color)
+            (pinta-figura f)
+        )
+    )
 )
 
 ;Borra la figura f de l'escena (i de la pantalla)
 ;--- Paramametres ---
 ;@f figura a borrar
 (defun borra-figura (f)
-    ;Pintar de blanco → cls-figura PENDIENTE
-    ;Borrar de l'escena
-    (setFigures (borra-f f (getlFigures)))
+    ;Repintar
+    (cls-figura f)
+    ;Borrar figura de l'escena
+    (set-figures (borra-f f (get-figures)))
 )
 
 ;Borra un elemento de una lista
 (defun borra-f (f l)
     (cond
-        ;Si ya no hay mas figuras
         ( (null l) nil)
-        ;Si es igual lo borramos
         ( (equal f (car l)) (cdr l))
-        ;Si no es igual, guardamos el primer elemento
         (t (cons (car l) (borra-f f (cdr l))))
     )
 )
 
 ;Retorna la llista de figures de l'escena
-(defun getlFigures ()
+(defun get-figures ()
     (get 'escena 'figures)
 )
 
 ;Posa un element/llista a la propietat de figures 
-(defun setFigures (e)
+(defun set-figures (e)
     (putprop 'escena e 'figures)
 )
 
 ;Borra la figura f només de la pantalla
 (defun cls-figura (f)
-    nil
+    (change-color f '(255 255 255))
 )
 ;Borra tot el contingut de l'escena (i de la pantalla)
 (defun borra-figures ()
-    nil
+    ;Borrar figures de l'escena
+    (set-figures nil)
+    (cls) ; per netejar la pantalla cada pic que executam una instrucció
 )
 
-; pinta totes les figures de la llista de figures de l'escena
+;Pinta totes les figures de la llista de figures de l'escena
 (defun pinta-figures ()
-    (car (get (get (car (get 'escena 'figures)) 'patro) 'arestes))
+    (pinta-llista-figures (get-figures))
+)
 
+;Pinta totes les digures passades per paràmetre
+;--- Paràmetres ---
+;@l llista de noms de figures
+(defun pinta-llista-figures (l)
+    (cond
+        ((null l) nil)
+        (t  
+            (pinta-figura (car l)) ; Pinta la primera figura
+            (pinta-llista-figures (cdr l)) ; Iteram
+        )
+    )
 )
 
 ; PATRÓ CUB:
@@ -230,61 +274,87 @@
     ;(pinta-cares (get (get (cerca-figura f (get 'escena 'figures)) 'patro) 'cares) (get (cerca-figura f (get 'escena 'figures)) 'patro))
     ;(color (get f 'color))
     (eval (cons 'color (get f 'color))) ; pintam del color que toca la figura
-    (pinta-cares (get (get f 'patro) 'cares) (get f 'patro))
-    (color 0 0 0) 
+    (pinta-cares (get (get f 'patro) 'cares) (get f 'patro) f)
+    (color 0 0 0) ; tornam a posar el color negre per defecte
 )
 
 ; Recorr totes les cares pintant totes les arestes
-(defun pinta-cares (l p)
+(defun pinta-cares (l p f)
     (cond
         ((null l) nil)
         (t  
-            (pinta-arestes (car l) p) ; pinta les arestes de la cara
-            (pinta-cares (cdr l) p) ; pinta la següent cara
+            (pinta-arestes (car l) p f) ; pinta les arestes de la cara
+            (pinta-cares (cdr l) p f) ; pinta la següent cara
         )
     )
 )
 
 ; Recorr totes les arestes pintant tots els vèrtexs
-(defun pinta-arestes (l p) 
+(defun pinta-arestes (l p f)
     (cond
         ((null l) nil)
         (t  
-            (pinta-vertexs (get-n (car l) (get p 'arestes)) p) ; pinta els vèrtexs de l'aresta
-            (pinta-arestes (cdr l) p) ; pinta la següent aresta
+            (pinta-vertexs (get-n (car l) (get p 'arestes)) p f) ; pinta els vèrtexs de l'aresta
+            (pinta-arestes (cdr l) p f) ; pinta la següent aresta
         )
     )
 )
 
 ; Pinta tots els vèrtexs
-(defun pinta-vertexs (l p)
+;--- Paràmetres ---
+;@l vertexs de la aresta a pintar
+;@p patro de la figura
+;@f figura
+(defun pinta-vertexs (l p f)
     (cond 
         ((null l) nil)
         (t
             ;(print l)
-            (move (+ 320 (car (get-n (car l) (get p 'punts))))  (+ 187 (cadr (get-n (car l) (get p 'punts)))) ) ; posicionam el cursor al primer vèrtex
-            (draw (+ 320 (car (get-n (cadr l) (get p 'punts)))) (+ 187 (cadr (get-n (cadr l) (get p 'punts)))) ) ; dibuixam l'aresta fins al segon vèrtex
+            ;(move (+ 320 (car (get-n (car l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))   )))  (+ 187 (cadr (get-n (car l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))    )))) ; posicionam el cursor al primer vèrtex
+            ;(draw (+ 320 (car (get-n (cadr l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))   ))) (+ 187 (cadr (get-n (cadr l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))   )))) ; dibuixam l'aresta fins al segon vèrtex
+            ;(print (get-n (car l) (get p 'punts)))
+            ;(print (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu)))
+            
+            ;Posicionam el cursor al primer vèrtex
+            (move 
+                (+ 320 (car (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))   ;Ax
+                (+ 187 (cadr (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))  ;Ay
+            ) 
+            ;Dibuixam l'aresta fins al segon vèrtex
+            (draw 
+                (+ 320 (car (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu))))  ;Bx
+                (+ 187 (cadr (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu)))) ;By
+            ) 
         )
     )
 )
 
-; para pruebas: (vertexPerTransformada '(1) '((3 2) (3 4) (5 6) (7 8)))
-; Multiplica el vertex per la matriu transformada (necessari per dibuixar les figures)
-(defun vertexPerTransformada (v mt)
-    ;(add-at-end 1 v) ; necessari per multiplicar el vèrtex (1x4) per la matriu transformada (4x4)
-    ;(cons (producteEscalar (add-at-end 1 v) (get-n 1 mt)) (cons (producteEscalar (add-at-end 1 v) (get-n 2 mt)) 
-    (cons (producteEscalar (add-at-end 1 v) (get-n 3 mt)) (producteEscalar (add-at-end 1 v) (get-n 4 mt)));))
+; testing: (vector-per-matriu (get 'cub 'punts) (get 'cub1 'tmatriu))  
+; para pruebas: (vector-per-matriu '(-20 -20 20) '((1 0 0 0) (0 1 0 0) (0 0 1 0) (0 0 0 1)))
+
+;Multiplica un vector per una matriu
+;--- Paràmetres ---
+;@v vector
+;@m matriu
+(defun vector-per-matriu (v m)
+    ; (add-at-end 1 v) Serveix per multiplicar el vèrtex (1x4) per la matriu transformada (4x4)
+    (cons (producte-escalar (add-at-end 1 v) (get-n 1 m)) 
+        (cons (producte-escalar (add-at-end 1 v) (get-n 2 m)) 
+            (cons (producte-escalar (add-at-end 1 v) (get-n 3 m)) 
+                (list (producte-escalar (add-at-end 1 v) (get-n 4 m)))
+            )
+        )
+    )
 )
 
 ;Calcula el producte escalar de dos vectors donats
 ;--- Paràmetres ---
 ;@v1 vector1
 ;@v2 vector2
-(defun producteEscalar (v1 v2)
+(defun producte-escalar (v1 v2)
     (cond 
         ((null v1) 0)
-        (t (+ (* (car v1) (car v2)) (producteEscalar (cdr v1) (cdr v2)) ))
-    
+        (t (+ (* (car v1) (car v2)) (producte-escalar (cdr v1) (cdr v2)) ))
     )
 )
 
@@ -295,7 +365,7 @@
 (defun cerca-figura (f l) ; NO SE UTILIZA AL FINAL (NO BORRAR AUN PORSIACA)
     (cond 
         ((null l)  nil)
-        ((EQUAL f (car l)) (car l))
+        ((equal f (car l)) (car l))
         (t (cerca-figura f (cdr l)))
     )
 )
@@ -319,3 +389,78 @@
 		(t (get-n (- n 1) (cdr l)))
 	)
 )
+
+;Matriz de translacion donde se sustituyen los valores en la matriz por los dados en @param
+;La matriz esta invertida para mayor comodidad en los calculos
+;--- Paramametres ---
+;@dx eje x
+;@dy eje y
+;@dz eje z
+
+(defun translacio (dx dy dz)
+    (list
+    (list 1 0 0 dx)
+    (list 0 1 0 dy)
+    (list 0 0 1 dz)
+    (list 0 0 0 1))
+)
+
+;Matriz de escalado donde se sustituyen los valores en la matriz por los dados en @param
+;La matriz esta invertida para mayor comodidad en los calculos
+;--- Paramametres ---
+;@ex eje x
+;@ey eje y
+;@ez eje z
+
+(defun escalat (ex ey ez)
+    (list 
+    (list ex 0 0 0)
+    (list 0 ey 0 0)
+    (list 0 0 ez 0)
+    (list 0 0 0 1))
+)
+
+;Matriz de escalado donde se rota @a radianes en el eje x 
+;La matriz esta invertida para mayor comodidad en los calculos
+;--- Paramametres ---
+;@a angulo en radianes
+
+(defun rotax (a)
+    (list
+    (list 1 0 0 0)
+    (list 0 (cos a) (sin a) 0)
+    (list 0 (- 0 (sin a)) (cos a) 0)
+    (list 0 0 0 1))
+)
+
+;Matriz de escalado donde se rota @a radianes en el eje y 
+;La matriz esta invertida para mayor comodidad en los calculos
+;--- Paramametres ---
+;@a angulo en radianes
+
+(defun rotay (a)
+    (list
+        (list (cos a) 0 (sin a) 0)
+        (list 0 1 0 0)
+        (list (- (sin a)) 0 (cos a) 0)
+        (list 0 0 0 1))
+)
+
+;Matriz de escalado donde se rota @a radianes en el eje z 
+;La matriz esta invertida para mayor comodidad en los calculos
+;--- Paramametres ---
+;@a angulo en radianes
+
+(defun rotaz (a) 
+    (list 
+    (list (cos a) (sin a) 0 0)
+    (list (- (sin a)) (cos a) 0 0)
+    (list 0 0 1 0)
+    (list 0 0 0 1))
+)
+
+(defun trasllada-figura (f x y z)
+   (ACTUALIZAR 'TMATRIU DE F (MULTIPLICAR MATRIZ (get f 'tmatriu) (TRANSLACIO XXX) ))
+)
+
+(defun multiplica-matriz ())
