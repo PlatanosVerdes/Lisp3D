@@ -49,11 +49,11 @@ Juan Carlos:
 - (escala-figura f x y z)           ✅    
 
 Jorge:
-- (inicia-patrons)      ✅
-- (borra-figura f)      ✅ 
-- (borra-figures)       ✅
-- (cls-figura f)        ✅
-- (inicia-figura f)     ✅
+- (inicia-patrons)                  ✅
+- (borra-figura f)                  ✅ 
+- (borra-figures)                   ✅
+- (cls-figura f)                    ✅
+- (inicia-figura f)                 ✅
 
 DUDAS:
 - En cls-figura, tenemos que mirar si existe la figura? Y asi con todos los metodos?
