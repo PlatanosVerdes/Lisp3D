@@ -47,6 +47,7 @@
 
     (pinta-figura 'cub1)
 )
+;------------------------------------------------------------------------------
 
 ;Crearà els àtoms pel cub, prisma i octaedre amb totes les seves propietats
 (defun inicia-patrons ()
