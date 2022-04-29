@@ -39,7 +39,7 @@
     (cls-figura 'cub1)
 
     (crea-figura 'prisma1 'prisma '(255 0 0))
-    (escala-figura 'prisma1 100 100 100)
+    (escala-figura 'prisma1 0 115 85)
     (cls-figura 'prisma1)
 
     (crea-figura 'octaedre1 'octaedre '(72 39 155))
