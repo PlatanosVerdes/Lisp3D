@@ -16,21 +16,37 @@
 ;Verd:      (0, 115, 85)
 ;Blau:      (12, 17, 84)
 ;Lila:      (72, 39, 155)
+;Turquesa:  (0, 255, 204)
 
-;inIt Metodo temporal que crea figuras
+
+
+;Personalització de la consola
+(putprop 'letters '(0 255 204) 'color)
+(putprop 'background '(0 0 0) 'color)
+
+;Possar els colors de la terminal:
+(eval (cons 'color (append (get 'letters 'color) (get 'background 'color)) ) )
+(cls)
+
+
+;inIt Metóde temporal que crea figures
 (defun init ()
     (cls) ; per netejar la pantalla cada pic que executam una instrucció
     (inicia-patrons)
+
     (crea-figura 'cub1 'cub '(255 0 0))
-    (crea-figura 'cub1 'cub '(0 0 0))
+    (escala-figura 'cub1 100 100 100)
+    (cls-figura 'cub1)
+
     (crea-figura 'prisma1 'prisma '(255 0 0))
+    (escala-figura 'prisma1 100 100 100)
+    (cls-figura 'prisma1)
+
     (crea-figura 'octaedre1 'octaedre '(72 39 155))
+    (escala-figura 'octaedre1 100 100 100)
+    (cls-figura 'octaedre1)
+
     (pinta-figura 'cub1)
-    ;(pinta-figures)
-    ;(pinta-llista-figures '(cub1 prisma1))
-    ;(pinta-figura 'prisma1)
-    ;(pinta-figura 'octaedre1)
-    ;(pinta-figura 'cub2)
 )
 
 ;Crearà els àtoms pel cub, prisma i octaedre amb totes les seves propietats
@@ -45,12 +61,12 @@
 (defun inicia-patrons-prisma ()
     ;Punts
     (putprop 'prisma '(
-        (-20 -40 0)         ;1
-        (20 -40 0)          ;2
-        (0 -40 -40)         ;3
-        (-20 40 0)          ;4
-        (20 40 0)           ;5
-        (0 40 -40))         ;6
+        (-0.5 -1 0)       ;1
+        (0.5 -1 0)         ;2
+        (0 -1 -1)           ;3
+        (-0.5 1 0)       ;4
+        (0.5 1 0)            ;5
+        (0 1 -1))            ;6
     'punts)
     ;Arestes
     (putprop 'prisma '(
@@ -78,12 +94,12 @@
 (defun inicia-patrons-octaedre ()
     ;Punts
     (putprop 'octaedre '(
-        (-20 0 20)      ;1
-        (20 0 20)       ;2
-        (20 0 -20)      ;3
-        (-20 0 -20)     ;4
-        (0 -40 0)       ;5
-        (0 40 0))       ;6
+        (-0.5 0 0.5)    ;1
+        (0.5 0 0.5)     ;2
+        (0.5 0 -0.5)    ;3
+        (-0.5 0 -0.5)   ;4
+        (0 -1 0)        ;5
+        (0 1 0))        ;6
     'punts)
     ;Arestes
     (putprop 'octaedre '(
@@ -117,14 +133,14 @@
 (defun inicia-patrons-cub ()
     ;Punts
     (putprop 'cub '(
-        (-20 -20 20)     ;1
-        (20 -20 20)      ;2
-        (20 -20 -20)     ;3
-        (-20 -20 -20)    ;4
-        (-20 20 20)      ;5
-        (20 20 20)       ;6
-        (20 20 -20)      ;7
-        (-20 20 -20))    ;8
+        (-0.5 -0.5 0.5)     ;1
+        (0.5 -0.5 0.5)      ;2
+        (0.5 -0.5 -0.5)     ;3
+        (-0.5 -0.5 -0.5)    ;4
+        (-0.5 0.5 0.5)      ;5
+        (0.5 0.5 0.5)       ;6
+        (0.5 0.5 -0.5)      ;7
+        (-0.5 0.5 -0.5))    ;8
     'punts)
     ;Arestes
     (putprop 'cub '(
@@ -221,7 +237,10 @@
     (set-figures (borra-f f (get-figures)))
 )
 
-;Borra un elemento de una lista
+;Borra un elemento d'una llista
+;--- Paramametres ---
+;@f figura a borrar
+;@l llista
 (defun borra-f (f l)
     (cond
         ( (null l) nil)
@@ -235,16 +254,22 @@
     (get 'escena 'figures)
 )
 
-;Posa un element/llista a la propietat de figures 
+;Posa un element/llista a la propietat de figures
+;--- Paramametres ---
+;@e figura a possar
 (defun set-figures (e)
     (putprop 'escena e 'figures)
 )
 
 ;Borra la figura f només de la pantalla
+;--- Paramametres ---
+;@f figura a borrar
 (defun cls-figura (f)
-    (color 255 255 255)
+    ;Pintam del color del fons per borrar
+    (eval (cons 'color (get 'background 'color) ))
     (pinta-cares (get (get f 'patro) 'cares) (get f 'patro) f)
-    (color 0 0 0)
+    ;Tornam a possar el color per defecte
+    (eval (cons 'color (get 'letters 'color) ))
 )
 ;Borra tot el contingut de l'escena (i de la pantalla)
 (defun borra-figures ()
@@ -271,23 +296,22 @@
     )
 )
 
-; PATRÓ CUB:
-; CARES ((1 6 9 5);1 (2 7 10 6);2 (3 8 11 7);3 (4 5 12 8);4 (1 2 3 4);5 (9 10 11 12);6)
-; ARESTES ((1 2);1 (2 3);2 (3 4);3 (4 1);4 (1 5);5 (2 6);6 (3 7);7 (4 8);8 (5 6);9 (6 7);10 (7 8);11 (8 5);12) 
-; PUNTS  (-0.5 -0.5 0.5);1 (0.5 -0.5 0.5);2 (0.5 -0.5 -0.5);3 (-0.5 -0.5 -0.5);4 (-0.5 0.5 0.5);5 (0.5 0.5 0.5);6 (0.5 0.5 -0.5);7 (-0.5 0.5 -0.5));8
-
 ;Dibuixa una figura de les que han estat creades
 ;--- Paràmetres ---
 ;@f figura
 (defun pinta-figura (f)
-    ;(pinta-cares (get (get (cerca-figura f (get 'escena 'figures)) 'patro) 'cares) (get (cerca-figura f (get 'escena 'figures)) 'patro))
-    ;(color (get f 'color))
-    (eval (cons 'color (get f 'color))) ; pintam del color que toca la figura
+    ;Pintam del color que toca la figura
+    (eval (cons 'color (get f 'color))) 
     (pinta-cares (get (get f 'patro) 'cares) (get f 'patro) f)
-    (color 0 0 0) ; tornam a posar el color negre per defecte
+    ;Possam una altra vegada el color per defecte
+    (eval (cons 'color (get 'letters 'color) ))
 )
 
 ; Recorr totes les cares pintant totes les arestes
+;--- Paràmetres ---
+;@l cares de la figura
+;@p patro de la figura
+;@f figura
 (defun pinta-cares (l p f)
     (cond
         ((null l) nil)
@@ -299,6 +323,10 @@
 )
 
 ; Recorr totes les arestes pintant tots els vèrtexs
+;--- Paràmetres ---
+;@l arestes de la figura
+;@p patro de la figura
+;@f figura
 (defun pinta-arestes (l p f)
     (cond
         ((null l) nil)
@@ -317,13 +345,7 @@
 (defun pinta-vertexs (l p f)
     (cond 
         ((null l) nil)
-        (t
-            ;(print l)
-            ;(move (+ 320 (car (get-n (car l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))   )))  (+ 187 (cadr (get-n (car l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))    )))) ; posicionam el cursor al primer vèrtex
-            ;(draw (+ 320 (car (get-n (cadr l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))   ))) (+ 187 (cadr (get-n (cadr l) (vector-per-matriu (get p 'punts) (get f 'tmatriu))   )))) ; dibuixam l'aresta fins al segon vèrtex
-            ;(print (get-n (car l) (get p 'punts)))
-            ;(print (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu)))
-            
+        (t            
             ;Posicionam el cursor al primer vèrtex
             (move 
                 (+ 320 (realpart (round (car (vector-matriu (add-at-end 1 (get-n (car l) (get p 'punts))) (transposta (get f 'tmatriu)))))))   ;Ax
@@ -338,24 +360,9 @@
     )
 )
 
-; testing: (vector-per-matriu (get 'cub 'punts) (get 'cub1 'tmatriu))  
-; para pruebas: (vector-per-matriu '(-20 -20 20) '((1 0 0 0) (0 1 0 0) (0 0 1 0) (0 0 0 1)))
-
-;Multiplica un vector per una matriu
+;Fa la transposta de una matriu
 ;--- Paràmetres ---
-;@v vector
-;@m matriu
-;(defun vector-per-matriu (v m)
-;    ; (add-at-end 1 v) Serveix per multiplicar el vèrtex (1x4) per la matriu transformada (4x4)
-;    (cons (producte-escalar (add-at-end 1 v) (get-n 1 m)) 
-;        (cons (producte-escalar (add-at-end 1 v) (get-n 2 m)) 
-;            (cons (producte-escalar (add-at-end 1 v) (get-n 3 m)) 
-;                (list (producte-escalar (add-at-end 1 v) (get-n 4 m)))
-;            )
-;        )
-;    )
-;)
-
+;@l matriu
 (defun transposta (l) 
     (cond ((null (car l)) nil) 
         (t (cons (mapcar 'car l) (transposta (mapcar 'cdr l))) ) 
@@ -411,7 +418,6 @@
 ;@dx eje x
 ;@dy eje y
 ;@dz eje z
-
 (defun translacio (dx dy dz)
     (list
     (list 1 0 0 dx)
@@ -426,7 +432,6 @@
 ;@ex eje x
 ;@ey eje y
 ;@ez eje z
-
 (defun escalat (ex ey ez)
     (list 
     (list ex 0 0 0)
@@ -439,7 +444,6 @@
 ;La matriz esta invertida para mayor comodidad en los calculos
 ;--- Paramametres ---
 ;@a angulo en radianes
-
 (defun rotax (a)
     (list
     (list 1 0 0 0)
@@ -452,7 +456,6 @@
 ;La matriz esta invertida para mayor comodidad en los calculos
 ;--- Paramametres ---
 ;@a angulo en radianes
-
 (defun rotay (a)
     (list
         (list (cos a) 0 (sin a) 0)
@@ -465,7 +468,6 @@
 ;La matriz esta invertida para mayor comodidad en los calculos
 ;--- Paramametres ---
 ;@a angulo en radianes
-
 (defun rotaz (a)
     (list 
     (list (cos a) (sin a) 0 0)
@@ -480,9 +482,14 @@
 ;@x Movimiento en eje x
 ;@y Movimiento en eje y
 ;@z Movimiento en eje z
-
 (defun trasllada-figura (f x y z)
-    (putprop f (multiplica-matriz (get f 'tmatriu) (translacio x y z)) 'tmatriu)
+    ;Para una mejor visualizacion borra la figura previamente y al final se volvera a visualizar
+    (cls-figura f) 
+
+    (putprop f (multiplica-matriu (get f 'tmatriu) (translacio x y z)) 'tmatriu)
+
+    ;Volver a pintar
+    (pinta-figura f) 
 )
 
 ;Función para calcular la nueva posición en rotación de la figura según sus parametros
@@ -491,13 +498,18 @@
 ;@x rotación en eje x
 ;@y rotación en eje y
 ;@z rotación en eje z
-
 (defun rota-figura (f x y z)
-    (putprop f (multiplica-matriz
-        (multiplica-matriz
-            (multiplica-matriz (get f 'tmatriu) (rotax x)) 
+    ;Borra la figura previamente
+    (cls-figura f) 
+    
+    (putprop f (multiplica-matriu
+        (multiplica-matriu
+            (multiplica-matriu (get f 'tmatriu) (rotax x)) 
         (rotay y)) 
     (rotaz z)) 'tmatriu)
+    
+    ;Volver a pintar
+    (pinta-figura f) 
 )
 
 ;Función para calcular la nueva dimensión de la figura según sus parametros
@@ -506,20 +518,24 @@
 ;@x variación de tamaño x
 ;@y variación de tamaño y
 ;@z variación de tamaño z
-
 (defun escala-figura (f x y z)
-    (putprop f (multiplica-matriz (get f 'tmatriu) (escalat x y z)) 'tmatriu)
+    ;Borra la figura previamente
+    (cls-figura f) 
+
+    (putprop f (multiplica-matriu (get f 'tmatriu) (escalat x y z)) 'tmatriu)
+
+    ;Volver a pintar
+    (pinta-figura f)
 )
 
 ;Función que permite multiplicar matrices del mismo tamaño entre ellas
 ;--- Paramametres ---
 ;@m1 matriz de transformación del objeto
 ;@m matriz de cambio con la nueva configuración
-
-(defun multiplica-matriz (m1 m2)
+(defun multiplica-matriu (m1 m2)
     (cond 
         ((null (car m1)) nil)
-        (t (cons (vector-matriu (car m1) m2) (multiplica-matriz (cdr m1) m2)))
+        (t (cons (vector-matriu (car m1) m2) (multiplica-matriu (cdr m1) m2)))
     )
 )
 
@@ -527,7 +543,6 @@
 ;--- Paramametres ---
 ;@v vector del objeto
 ;@m matriz de cambio con la nueva configuración
-
 (defun vector-matriu (v m) 
     (cond 
         ((null (car m)) nil)
@@ -541,14 +556,3 @@
     (cond ((null (car l)) 0)
             (t (+ (car l) (sum-list (cdr l)))))
 )
-
-
-;Función de prueba, funciona con matrices que se pasen directamente por parametro
-
-
-;(defun multiplica-matriu (f m)
-;    (cond 
-;        ((null (car f)) nil)
-;        (t  (cons (vector-matriu (car f) m) (multiplica-matriu (cdr f) m)))
-;    )
-;)
