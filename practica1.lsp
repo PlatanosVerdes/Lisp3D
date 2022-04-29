@@ -654,10 +654,11 @@
     )
 )
 
-;Metode que entra en mode escalat.
-;Pitjant tecles es mou la figura
+;Metode que comproba si un element 
+;existeix dins una llista.
 ;--- Paràmetres ---
-;@f figura
+;@e element a comprobar
+;@l llista de elements
 (defun pertany (e l) 
     (cond 
         ((null l) nil)
