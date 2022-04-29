@@ -556,3 +556,85 @@
     (cond ((null (car l)) 0)
             (t (+ (car l) (sum-list (cdr l)))))
 )
+
+
+(defun animacio-text (text)
+    (goto-xy 70 0)
+    (format t text)
+    (cleol)
+    (values)
+)
+(defun borra-texto ()
+    (goto-xy 70 0)
+    (cleol)
+)
+
+(defun animacio (f)
+    (animacio-text "animacio")
+    
+    (setq key(key-pressed '(114 116 113 101)))
+    (cond 
+        ((equal key 114) (anima-rotacio f))
+        ((equal key 116) (anima-traslacio f))
+        ((equal key 101) (anima-escalat f))
+        ((equal key 113) (animacio-text ""))
+    )
+)
+
+(defun anima-rotacio (f)
+    (animacio-text "rotacio")
+
+        (setq key(key-pressed '(331 333 328 336 113)))
+        (cond 
+            ((equal key 331) (rota-figura f 0 1 0)(anima-rotacio f))             ;izq
+            ((equal key 333) (rota-figura f 0 (- 0 1) 0)(anima-rotacio f))       ;der
+            ((equal key 328) (rota-figura f 1 0 0)(anima-rotacio f))             ;arriba
+            ((equal key 336) (rota-figura f (- 0 1) 0 0)(anima-rotacio f))       ;abajo
+            ((equal key 113) (animacio f))
+        )
+        (cls-figura f)
+        (pinta-figura f)
+)
+
+(defun anima-traslacio (f)
+    (animacio-text "traslacio")
+
+        (setq key(key-pressed '(331 333 328 336 113)))
+        (cond 
+            ((equal key 331) (trasllada-figura f (- 0 1) 0 0)(anima-traslacio f))             ;izq
+            ((equal key 333) (trasllada-figura f 1 0 0)(anima-traslacio f))       ;der
+            ((equal key 328) (trasllada-figura f 0 1 0)(anima-traslacio f))             ;arriba
+            ((equal key 336) (trasllada-figura f 0 (- 0 1) 0)(anima-traslacio f))       ;abajo
+            ((equal key 113) (animacio f))
+        )
+        (cls-figura f)
+        (pinta-figura f)
+)
+
+(defun anima-escalat (f)
+    (animacio-text "escalat")
+
+        (setq key(key-pressed '(328 336 113)))
+        (cond 
+            ((equal key 328) (escala-figura f 1.25 1.25 1.25)(anima-escalat f))             ;arriba
+            ((equal key 336) (escala-figura f 0.75 0.75 0.75)(anima-escalat f))       ;abajo
+            ((equal key 113) (animacio f))
+        )
+        (cls-figura f)
+        (pinta-figura f)
+)
+
+(defun key-pressed (l)
+    (loop
+        (setq key(get-key))
+        (when (pertany key l)(return key))
+    )
+)
+
+(defun pertany (e l) 
+    (cond 
+        ((null l) nil)
+        ((equal e (car l)) t)
+        (t (pertany e (cdr l) )) 
+    )
+)
