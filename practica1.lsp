@@ -24,7 +24,7 @@
 (putprop 'letters '(0 255 204) 'color)
 (putprop 'background '(0 0 0) 'color)
 
-;Possar els colors de la terminal:
+;Posar els colors de la terminal:
 (eval (cons 'color (append (get 'letters 'color) (get 'background 'color)) ) )
 (cls)
 
@@ -256,7 +256,7 @@
 
 ;Posa un element/llista a la propietat de figures
 ;--- Paramametres ---
-;@e figura a possar
+;@e figura a posar
 (defun set-figures (e)
     (putprop 'escena e 'figures)
 )
@@ -268,7 +268,7 @@
     ;Pintam del color del fons per borrar
     (eval (cons 'color (get 'background 'color) ))
     (pinta-cares (get (get f 'patro) 'cares) (get f 'patro) f)
-    ;Tornam a possar el color per defecte
+    ;Tornam a posar el color per defecte
     (eval (cons 'color (get 'letters 'color) ))
 )
 ;Borra tot el contingut de l'escena (i de la pantalla)
@@ -557,20 +557,26 @@
             (t (+ (car l) (sum-list (cdr l)))))
 )
 
-
+;Metode que printea a la adalt a la detra un text
+;--- Paramametres ---
+;@text texte
 (defun animacio-text (text)
     (goto-xy 70 0)
     (format t text)
     (cleol)
     (values)
 )
-(defun borra-texto ()
+;Metode que borra el texte de arriba la detra
+(defun borra-text ()
     (goto-xy 70 0)
     (cleol)
 )
 
+;Metode que entra en mode animacio
+;--- Paràmetres ---
+;@f figura
 (defun animacio (f)
-    (animacio-text "animacio")
+    (animacio-text "ANIMACIO")
     
     (setq key(key-pressed '(114 116 113 101)))
     (cond 
@@ -581,49 +587,66 @@
     )
 )
 
+;Metode que entra en mode rotacio.
+;Pitjant tecles es mou la figura
+;--- Paràmetres ---
+;@f figura
 (defun anima-rotacio (f)
-    (animacio-text "rotacio")
+    (animacio-text "ROTACIO")
 
         (setq key(key-pressed '(331 333 328 336 113)))
         (cond 
-            ((equal key 331) (rota-figura f 0 1 0)(anima-rotacio f))             ;izq
-            ((equal key 333) (rota-figura f 0 (- 0 1) 0)(anima-rotacio f))       ;der
-            ((equal key 328) (rota-figura f 1 0 0)(anima-rotacio f))             ;arriba
-            ((equal key 336) (rota-figura f (- 0 1) 0 0)(anima-rotacio f))       ;abajo
+            ((equal key 331) (rota-figura f 0 0.25 0)(anima-rotacio f))             ;izq
+            ((equal key 333) (rota-figura f 0 (- 0 0.25) 0)(anima-rotacio f))       ;der
+            ((equal key 328) (rota-figura f 0.25 0 0)(anima-rotacio f))             ;arriba
+            ((equal key 336) (rota-figura f (- 0 0.25) 0 0)(anima-rotacio f))       ;abajo
             ((equal key 113) (animacio f))
         )
         (cls-figura f)
         (pinta-figura f)
 )
 
+;Metode que entra en mode traslacio.
+;Pitjant tecles es mou la figura
+;--- Paràmetres ---
+;@f figura
 (defun anima-traslacio (f)
-    (animacio-text "traslacio")
+    (animacio-text "TRASLACIO")
 
         (setq key(key-pressed '(331 333 328 336 113)))
         (cond 
-            ((equal key 331) (trasllada-figura f (- 0 1) 0 0)(anima-traslacio f))             ;izq
-            ((equal key 333) (trasllada-figura f 1 0 0)(anima-traslacio f))       ;der
-            ((equal key 328) (trasllada-figura f 0 1 0)(anima-traslacio f))             ;arriba
-            ((equal key 336) (trasllada-figura f 0 (- 0 1) 0)(anima-traslacio f))       ;abajo
+            ((equal key 331) (trasllada-figura f (- 0 2) 0 0)(anima-traslacio f))   ;izq
+            ((equal key 333) (trasllada-figura f 2 0 0)(anima-traslacio f))         ;der
+            ((equal key 328) (trasllada-figura f 0 2 0)(anima-traslacio f))         ;arriba
+            ((equal key 336) (trasllada-figura f 0 (- 0 2) 0)(anima-traslacio f))   ;abajo
             ((equal key 113) (animacio f))
         )
         (cls-figura f)
         (pinta-figura f)
 )
 
+;Metode que entra en mode escalat.
+;Pitjant tecles es mou la figura
+;--- Paràmetres ---
+;@f figura
 (defun anima-escalat (f)
-    (animacio-text "escalat")
+    (animacio-text "ESCALAT")
 
         (setq key(key-pressed '(328 336 113)))
         (cond 
-            ((equal key 328) (escala-figura f 1.25 1.25 1.25)(anima-escalat f))             ;arriba
-            ((equal key 336) (escala-figura f 0.75 0.75 0.75)(anima-escalat f))       ;abajo
+            ((equal key 328) (escala-figura f 1.25 1.25 1.25)(anima-escalat f))     ;arriba
+            ((equal key 336) (escala-figura f 0.75 0.75 0.75)(anima-escalat f))     ;abajo
             ((equal key 113) (animacio f))
         )
         (cls-figura f)
         (pinta-figura f)
 )
 
+;Espera al fet que l'usuari pressioni en una tecla
+;i et retorna que tecla ha pressionat si està dins
+;de la llista passada per paràmetre
+;--- Paràmetres ---
+;@l conjunt de posibles tecles que es poden pitjar
 (defun key-pressed (l)
     (loop
         (setq key(get-key))
@@ -631,6 +654,10 @@
     )
 )
 
+;Metode que entra en mode escalat.
+;Pitjant tecles es mou la figura
+;--- Paràmetres ---
+;@f figura
 (defun pertany (e l) 
     (cond 
         ((null l) nil)
