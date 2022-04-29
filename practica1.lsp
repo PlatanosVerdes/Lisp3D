@@ -17,8 +17,7 @@
 ;Blau:      (12, 17, 84)
 ;Lila:      (72, 39, 155)
 ;Turquesa:  (0, 255, 204)
-
-
+;--------------------------
 
 ;Personalització de la consola
 (putprop 'letters '(0 255 204) 'color)
