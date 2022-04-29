@@ -326,13 +326,13 @@
             
             ;Posicionam el cursor al primer vèrtex
             (move 
-                (+ 320 (realpart (round (car (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))))   ;Ax
-                (+ 187 (realpart (round (cadr (vector-per-matriu (get-n (car l) (get p 'punts)) (get f 'tmatriu))))))  ;Ay
+                (+ 320 (realpart (round (car (vector-matriu (add-at-end 1 (get-n (car l) (get p 'punts))) (transposta (get f 'tmatriu)))))))   ;Ax
+                (+ 187 (realpart (round (cadr (vector-matriu (add-at-end 1 (get-n (car l) (get p 'punts))) (transposta (get f 'tmatriu)))))))  ;Ay
             ) 
             ;Dibuixam l'aresta fins al segon vèrtex
             (draw 
-                (+ 320 (realpart (round (car (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu))))))   ;Bx
-                (+ 187 (realpart (round (cadr (vector-per-matriu (get-n (cadr l) (get p 'punts)) (get f 'tmatriu))))))  ;By
+                (+ 320 (realpart (round (car (vector-matriu (add-at-end 1 (get-n (cadr l) (get p 'punts))) (transposta (get f 'tmatriu)))))))   ;Bx
+                (+ 187 (realpart (round (cadr (vector-matriu (add-at-end 1 (get-n (cadr l) (get p 'punts))) (transposta (get f 'tmatriu)))))))  ;By
             ) 
         )
     )
@@ -345,15 +345,21 @@
 ;--- Paràmetres ---
 ;@v vector
 ;@m matriu
-(defun vector-per-matriu (v m)
-    ; (add-at-end 1 v) Serveix per multiplicar el vèrtex (1x4) per la matriu transformada (4x4)
-    (cons (producte-escalar (add-at-end 1 v) (get-n 1 m)) 
-        (cons (producte-escalar (add-at-end 1 v) (get-n 2 m)) 
-            (cons (producte-escalar (add-at-end 1 v) (get-n 3 m)) 
-                (list (producte-escalar (add-at-end 1 v) (get-n 4 m)))
-            )
-        )
-    )
+;(defun vector-per-matriu (v m)
+;    ; (add-at-end 1 v) Serveix per multiplicar el vèrtex (1x4) per la matriu transformada (4x4)
+;    (cons (producte-escalar (add-at-end 1 v) (get-n 1 m)) 
+;        (cons (producte-escalar (add-at-end 1 v) (get-n 2 m)) 
+;            (cons (producte-escalar (add-at-end 1 v) (get-n 3 m)) 
+;                (list (producte-escalar (add-at-end 1 v) (get-n 4 m)))
+;            )
+;        )
+;    )
+;)
+
+(defun transposta (l) 
+    (cond ((null (car l)) nil) 
+        (t (cons (mapcar 'car l) (transposta (mapcar 'cdr l))) ) 
+    ) 
 )
 
 ;Calcula el producte escalar de dos vectors donats
