@@ -25,8 +25,18 @@
 
 ;Posar els colors de la terminal:
 (eval (cons 'color (append (get 'letters 'color) (get 'background 'color)) ) )
+;(repetir (eval (read)))
 (cls)
 
+;(defun repetir (x)
+;    ((imprimir x) (repetir(eval (read))))
+;)
+;
+;(defun imprimir (x)
+;    (goto-xy 0 30) '(eoln)
+;    (format t x)
+;    (values)
+;)
 
 ;inIt Metóde temporal que crea figures
 (defun init ()
@@ -557,21 +567,29 @@
             (t (+ (car l) (sum-list (cdr l)))))
 )
 
+<<<<<<< Updated upstream
 ;Metode que printea a la adalt a la detra un text
 ;--- Paramametres ---
 ;@text texte
+=======
+>>>>>>> Stashed changes
 (defun animacio-text (text)
     (goto-xy 70 0)
     (format t text)
     (cleol)
     (values)
 )
+<<<<<<< Updated upstream
 ;Metode que borra el texte de arriba la detra
 (defun borra-text ()
+=======
+(defun borra-texto ()
+>>>>>>> Stashed changes
     (goto-xy 70 0)
     (cleol)
 )
 
+<<<<<<< Updated upstream
 ;Metode que entra en mode animacio
 ;--- Paràmetres ---
 ;@f figura
@@ -647,6 +665,30 @@
 ;de la llista passada per paràmetre
 ;--- Paràmetres ---
 ;@l conjunt de posibles tecles que es poden pitjar
+=======
+(defun animacio (f)
+    (animacio-text "ANIMACIO")
+    (loop
+
+        (setq key(key-pressed '(114 116 113 101)))
+        (cond 
+            ((equal key 114) (animacio-text "ROTACIO"))
+            ((equal key 116) (animacio-text "TRANSLACIO"))
+            ((equal key 101) (animacio-text "ESCALAT"))
+            ((equal key 113) (animacio-text ""))
+        )
+        (when (equal key 113)(return nil))
+    )
+)
+
+(defun anima-rotacio (f)
+    (animacio-text "rotacio")
+    (
+        
+    )
+)
+
+>>>>>>> Stashed changes
 (defun key-pressed (l)
     (loop
         (setq key(get-key))
@@ -654,11 +696,14 @@
     )
 )
 
+<<<<<<< Updated upstream
 ;Metode que comproba si un element 
 ;existeix dins una llista.
 ;--- Paràmetres ---
 ;@e element a comprobar
 ;@l llista de elements
+=======
+>>>>>>> Stashed changes
 (defun pertany (e l) 
     (cond 
         ((null l) nil)
