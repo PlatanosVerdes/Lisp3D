@@ -61,12 +61,12 @@
 (defun inicia-patrons-prisma ()
     ;Punts
     (putprop 'prisma '(
-        (-0.5 -1 0)       ;1
-        (0.5 -1 0)         ;2
+        (-0.5 -1 0)         ;1
+        (0.5 -1 0)          ;2
         (0 -1 -1)           ;3
-        (-0.5 1 0)       ;4
-        (0.5 1 0)            ;5
-        (0 1 -1))            ;6
+        (-0.5 1 0)          ;4
+        (0.5 1 0)           ;5
+        (0 1 -1))           ;6
     'punts)
     ;Arestes
     (putprop 'prisma '(
