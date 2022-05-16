@@ -380,18 +380,6 @@
     )
 )
 
-;Cerca una figura dins la llista i la retorna en cas de trobar-la
-;--- Paràmetres ---
-;@f figura
-;@l llista
-(defun cerca-figura (f l) ; NO SE UTILIZA AL FINAL (NO BORRAR AUN PORSIACA)
-    (cond 
-        ((null l)  nil)
-        ((equal f (car l)) (car l))
-        (t (cerca-figura f (cdr l)))
-    )
-)
-
 ;Afegueix un element al final d'una llista
 ;--- Paràmetres ---
 ;@x element
