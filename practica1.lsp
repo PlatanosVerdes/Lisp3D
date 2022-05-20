@@ -71,12 +71,12 @@
 (defun inicia-patrons-prisma ()
     ;Punts
     (putprop 'prisma '(
-        (-0.5 -1 0)       ;1
-        (0.5 -1 0)         ;2
+        (-0.5 -1 0)         ;1
+        (0.5 -1 0)          ;2
         (0 -1 -1)           ;3
-        (-0.5 1 0)       ;4
-        (0.5 1 0)            ;5
-        (0 1 -1))            ;6
+        (-0.5 1 0)          ;4
+        (0.5 1 0)           ;5
+        (0 1 -1))           ;6
     'punts)
     ;Arestes
     (putprop 'prisma '(
@@ -387,18 +387,6 @@
     (cond 
         ((null v1) 0)
         (t (+ (* (car v1) (car v2)) (producte-escalar (cdr v1) (cdr v2)) ))
-    )
-)
-
-;Cerca una figura dins la llista i la retorna en cas de trobar-la
-;--- Paràmetres ---
-;@f figura
-;@l llista
-(defun cerca-figura (f l) ; NO SE UTILIZA AL FINAL (NO BORRAR AUN PORSIACA)
-    (cond 
-        ((null l)  nil)
-        ((equal f (car l)) (car l))
-        (t (cerca-figura f (cdr l)))
     )
 )
 
