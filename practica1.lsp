@@ -48,7 +48,7 @@
     (cls-figura 'cub1)
 
     (crea-figura 'prisma1 'prisma '(255 0 0))
-    (escala-figura 'prisma1 0 115 85)
+    (escala-figura 'prisma1 100 100 100)
     (cls-figura 'prisma1)
 
     (crea-figura 'octaedre1 'octaedre '(72 39 155))
@@ -555,29 +555,21 @@
             (t (+ (car l) (sum-list (cdr l)))))
 )
 
-<<<<<<< Updated upstream
 ;Metode que printea a la adalt a la detra un text
 ;--- Paramametres ---
 ;@text texte
-=======
->>>>>>> Stashed changes
 (defun animacio-text (text)
     (goto-xy 70 0)
     (format t text)
     (cleol)
     (values)
 )
-<<<<<<< Updated upstream
 ;Metode que borra el texte de arriba la detra
 (defun borra-text ()
-=======
-(defun borra-texto ()
->>>>>>> Stashed changes
     (goto-xy 70 0)
     (cleol)
 )
 
-<<<<<<< Updated upstream
 ;Metode que entra en mode animacio
 ;--- Paràmetres ---
 ;@f figura
@@ -653,30 +645,6 @@
 ;de la llista passada per paràmetre
 ;--- Paràmetres ---
 ;@l conjunt de posibles tecles que es poden pitjar
-=======
-(defun animacio (f)
-    (animacio-text "ANIMACIO")
-    (loop
-
-        (setq key(key-pressed '(114 116 113 101)))
-        (cond 
-            ((equal key 114) (animacio-text "ROTACIO"))
-            ((equal key 116) (animacio-text "TRANSLACIO"))
-            ((equal key 101) (animacio-text "ESCALAT"))
-            ((equal key 113) (animacio-text ""))
-        )
-        (when (equal key 113)(return nil))
-    )
-)
-
-(defun anima-rotacio (f)
-    (animacio-text "rotacio")
-    (
-        
-    )
-)
-
->>>>>>> Stashed changes
 (defun key-pressed (l)
     (loop
         (setq key(get-key))
@@ -684,14 +652,11 @@
     )
 )
 
-<<<<<<< Updated upstream
 ;Metode que comproba si un element 
 ;existeix dins una llista.
 ;--- Paràmetres ---
 ;@e element a comprobar
 ;@l llista de elements
-=======
->>>>>>> Stashed changes
 (defun pertany (e l) 
     (cond 
         ((null l) nil)
