@@ -25,18 +25,7 @@
 
 ;Posar els colors de la terminal:
 (eval (cons 'color (append (get 'letters 'color) (get 'background 'color)) ) )
-;(repetir (eval (read)))
 (cls)
-
-;(defun repetir (x)
-;    ((imprimir x) (repetir(eval (read))))
-;)
-;
-;(defun imprimir (x)
-;    (goto-xy 0 30) '(eoln)
-;    (format t x)
-;    (values)
-;)
 
 ;inIt Metóde temporal que crea figures
 (defun init ()
@@ -67,7 +56,7 @@
     (putprop 'escena nil 'figures) ;Posar una figura buida per "tenir" la llista inicialitzada
 )
 
-;Initzalitza un Prima
+;Inicialitza un Prisma
 (defun inicia-patrons-prisma ()
     ;Punts
     (putprop 'prisma '(
@@ -100,7 +89,7 @@
     'cares)
 )
 
-;Initzalitza un Octaedre
+;Inicialitza un Octaedre
 (defun inicia-patrons-octaedre ()
     ;Punts
     (putprop 'octaedre '(
@@ -139,7 +128,7 @@
     'cares)
 )
 
-;Initzalitza un Cub
+;Inicialitza un Cub
 (defun inicia-patrons-cub ()
     ;Punts
     (putprop 'cub '(
