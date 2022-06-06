@@ -399,7 +399,7 @@
 	)
 )
 
-;Matriu de translació on es substitueixen els valor de la matriu pels donats a  @param
+;Matriu de translació on es substitueixen els valor de la matriu pels donats a @param
 ;La matriu està invertida per a major comoditat en els càlculs
 ;--- Paràmetres ---
 ;@dx eje x
@@ -564,7 +564,6 @@
 ;@f figura
 (defun animacio (f)
     (animacio-text "ANIMACIO")
-    
     (setq key(key-pressed '(114 116 113 101)))
     (cond 
         ((equal key 114) (anima-rotacio f))
@@ -580,17 +579,16 @@
 ;@f figura
 (defun anima-rotacio (f)
     (animacio-text "ROTACIO")
-
-        (setq key(key-pressed '(331 333 328 336 113)))
-        (cond 
-            ((equal key 331) (rota-figura f 0 0.25 0)(anima-rotacio f))             ;izq
-            ((equal key 333) (rota-figura f 0 (- 0 0.25) 0)(anima-rotacio f))       ;der
-            ((equal key 328) (rota-figura f 0.25 0 0)(anima-rotacio f))             ;arriba
-            ((equal key 336) (rota-figura f (- 0 0.25) 0 0)(anima-rotacio f))       ;abajo
-            ((equal key 113) (animacio f))
-        )
-        (cls-figura f)
-        (pinta-figura f)
+    (setq key(key-pressed '(331 333 328 336 113)))
+    (cond 
+        ((equal key 331) (rota-figura f 0 0.25 0)(anima-rotacio f))             ; ←
+        ((equal key 333) (rota-figura f 0 (- 0 0.25) 0)(anima-rotacio f))       ; →
+        ((equal key 328) (rota-figura f 0.25 0 0)(anima-rotacio f))             ; ↑ 
+        ((equal key 336) (rota-figura f (- 0 0.25) 0 0)(anima-rotacio f))       ; ↓
+        ((equal key 113) (animacio f))
+    )
+    (cls-figura f)
+    (pinta-figura f)
 )
 
 ;Mode translació animada
@@ -599,17 +597,16 @@
 ;@f figura
 (defun anima-translacio (f)
     (animacio-text "TRANSLACIO")
-
-        (setq key(key-pressed '(331 333 328 336 113)))
-        (cond 
-            ((equal key 331) (trasllada-figura f (- 0 2) 0 0)(anima-translacio f))   ;izq
-            ((equal key 333) (trasllada-figura f 2 0 0)(anima-translacio f))         ;der
-            ((equal key 328) (trasllada-figura f 0 2 0)(anima-translacio f))         ;arriba
-            ((equal key 336) (trasllada-figura f 0 (- 0 2) 0)(anima-translacio f))   ;abajo
-            ((equal key 113) (animacio f))
-        )
-        (cls-figura f)
-        (pinta-figura f)
+    (setq key(key-pressed '(331 333 328 336 113)))
+    (cond 
+        ((equal key 331) (trasllada-figura f (- 0 2) 0 0)(anima-translacio f))   ; ←
+        ((equal key 333) (trasllada-figura f 2 0 0)(anima-translacio f))         ; →
+        ((equal key 328) (trasllada-figura f 0 2 0)(anima-translacio f))         ; ↑
+        ((equal key 336) (trasllada-figura f 0 (- 0 2) 0)(anima-translacio f))   ; ↓
+        ((equal key 113) (animacio f))
+    )
+    (cls-figura f)
+    (pinta-figura f)
 )
 
 ;Mode escalat animat
@@ -618,15 +615,14 @@
 ;@f figura
 (defun anima-escalat (f)
     (animacio-text "ESCALAT")
-
-        (setq key(key-pressed '(328 336 113)))
-        (cond 
-            ((equal key 328) (escala-figura f 1.25 1.25 1.25)(anima-escalat f))     ;arriba
-            ((equal key 336) (escala-figura f 0.75 0.75 0.75)(anima-escalat f))     ;abajo
-            ((equal key 113) (animacio f))
-        )
-        (cls-figura f)
-        (pinta-figura f)
+    (setq key(key-pressed '(328 336 113)))
+    (cond 
+        ((equal key 328) (escala-figura f 1.25 1.25 1.25)(anima-escalat f))     ; ↑
+        ((equal key 336) (escala-figura f 0.75 0.75 0.75)(anima-escalat f))     ; ↓
+        ((equal key 113) (animacio f))
+    )
+    (cls-figura f)
+    (pinta-figura f)
 )
 
 ;Espera al fet que l'usuari pressioni en una tecla

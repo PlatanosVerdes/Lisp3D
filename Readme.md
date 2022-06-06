@@ -1,6 +1,4 @@
------------------------------------------------------------
-METODOS EXTRA
------------------------------------------------------------
+# METODOS EXTRA
 
 - (get-figures):                Retorna la llista de figures de l'escena
 - (set-figures (e)):            Posa un element/llista a la propietat de figures 
@@ -14,9 +12,9 @@ METODOS EXTRA
 - (borra-f f l):                Borra un elemento de una lista
 
 
------------------------------------------------------------
-LISTA DE METODOS POR HACER
------------------------------------------------------------
+# LISTA DE METODOS POR HACER
+
+## Listado general
 1. (inicia-patrons):                ✅
 2. (crea-figura nom patró color):   ✅ 
 3. (borra-figura f):                ✅ 
@@ -33,22 +31,22 @@ LISTA DE METODOS POR HACER
 14. (rota-figura f x y z):          ✅
 15. (escala-figura f x y z):        ✅
 16. (inicia-figura f):              ✅
------------------------------------------------------------
-Alberto:
+
+## Alberto:
 - (translacio dx dy dz)             ✅
 - (escalat ex ey ez)                ✅
 - (rotax a)                         ✅
 - (rotay a)                         ✅
 - (rotaz a)                         ✅
 
-Juan Carlos:
+## Juan Carlos:
 - (pinta-figura f)                  ✅
 - (pinta-figures)                   ✅
 - (trasllada-figura f x y z)        ✅    
 - (rota-figura f x y z)             ✅
 - (escala-figura f x y z)           ✅    
 
-Jorge:
+## Jorge:
 - (inicia-patrons)                  ✅
 - (borra-figura f)                  ✅ 
 - (borra-figures)                   ✅
