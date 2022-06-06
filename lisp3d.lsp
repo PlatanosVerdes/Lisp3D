@@ -1,23 +1,23 @@
 ;--------------------------------------------------------------------------
 ;                          PRACTICA LISP3D - L.P.
 ;--------------------------------------------------------------------------
-;Autors: 
-;Juan Carlos Bujosa, Jorge González Pascual, Zhuo Han Yang (杨桌涵)
+; Autors: 
+; Juan Carlos Bujosa, Jorge González Pascual, Zhuo Han Yang (杨桌涵)
 ;--------------------------------------------------------------------------
 
 ;Load: (load 'lisp3d)
 
-;--------------------------
+;---------------------------
 ;       COLORS RGB:
-;--------------------------
-;Negre:     (0, 0, 0)
-;Blanc:     (255, 255, 255)
-;Vermell:   (210, 0, 0)
-;Verd:      (0, 115, 85)
-;Blau:      (12, 17, 84)
-;Lila:      (72, 39, 155)
-;Turquesa:  (0, 255, 204)
-;--------------------------
+;---------------------------
+; Negre:     (0, 0, 0)
+; Blanc:     (255, 255, 255)
+; Vermell:   (210, 0, 0)
+; Verd:      (0, 115, 85)
+; Blau:      (12, 17, 84)
+; Lila:      (72, 39, 155)
+; Turquesa:  (0, 255, 204)
+;---------------------------
 
 ;Personalització de la consola
 (putprop 'letters '(0 255 204) 'color)
@@ -170,7 +170,7 @@
 ;És una funció que permet la creació d'una figura 3D a partir
 ;del patró triat i guarda aquesta figura dins la propietat 'figures' de tipus llista d'un àtom
 ;'escena'. 
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@n nom
 ;@p patró
 ;@c color
@@ -193,7 +193,7 @@
     )
 )
 
-;Mirar si un elemento pertany a una llista
+;Mirar si un element pertany a una llista
 ;--- Paramametres ---
 ;@e element
 ;@l llista
@@ -206,7 +206,7 @@
 )
 
 ;Canvia el color de la figura
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@n nom
 ;@c color
 (defun change-color (n c)
@@ -215,7 +215,7 @@
 )
 
 ;Posa la figura f a la seva posició inicial (matriu identitat a la transformació) 
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@f nom de la figura
 (defun inicia-figura (f) 
     (putprop f '(
@@ -227,7 +227,7 @@
 )
 
 ;Borra la figura f de l'escena (i de la pantalla)
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@f figura a borrar
 (defun borra-figura (f)
     ;Repintar
@@ -236,8 +236,8 @@
     (set-figures (borra-f f (get-figures)))
 )
 
-;Borra un elemento d'una llista
-;--- Paramametres ---
+;Borra un element d'una llista
+;--- Paràmetres ---
 ;@f figura a borrar
 ;@l llista
 (defun borra-f (f l)
@@ -254,14 +254,14 @@
 )
 
 ;Posa un element/llista a la propietat de figures
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@e figura a posar
 (defun set-figures (e)
     (putprop 'escena e 'figures)
 )
 
 ;Borra la figura f només de la pantalla
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@f figura a borrar
 (defun cls-figura (f)
     ;Pintam del color del fons per borrar
@@ -306,7 +306,7 @@
     (eval (cons 'color (get 'letters 'color) ))
 )
 
-; Recorr totes les cares pintant totes les arestes
+;Recorr totes les cares pintant totes les arestes
 ;--- Paràmetres ---
 ;@l cares de la figura
 ;@p patro de la figura
@@ -321,7 +321,7 @@
     )
 )
 
-; Recorr totes les arestes pintant tots els vèrtexs
+;Recorr totes les arestes pintant tots els vèrtexs
 ;--- Paràmetres ---
 ;@l arestes de la figura
 ;@p patro de la figura
@@ -336,7 +336,7 @@
     )
 )
 
-; Pinta tots els vèrtexs
+;Pinta tots els vèrtexs
 ;--- Paràmetres ---
 ;@l vertexs de la aresta a pintar
 ;@p patro de la figura
@@ -399,9 +399,9 @@
 	)
 )
 
-;Matriz de translacion donde se sustituyen los valores en la matriz por los dados en @param
-;La matriz esta invertida para mayor comodidad en los calculos
-;--- Paramametres ---
+;Matriu de translació on es substitueixen els valor de la matriu pels donats a  @param
+;La matriu està invertida per a major comoditat en els càlculs
+;--- Paràmetres ---
 ;@dx eje x
 ;@dy eje y
 ;@dz eje z
@@ -413,9 +413,9 @@
     (list 0 0 0 1))
 )
 
-;Matriz de escalado donde se sustituyen los valores en la matriz por los dados en @param
-;La matriz esta invertida para mayor comodidad en los calculos
-;--- Paramametres ---
+;Matriu d'escalat on es substitueixen els valors de la matriu pels donats a @param
+;La matriu està invertida per a major comoditat en els càlculs
+;--- Paràmetres ---
 ;@ex eje x
 ;@ey eje y
 ;@ez eje z
@@ -427,10 +427,10 @@
     (list 0 0 0 1))
 )
 
-;Matriz de escalado donde se rota @a radianes en el eje x 
-;La matriz esta invertida para mayor comodidad en los calculos
-;--- Paramametres ---
-;@a angulo en radianes
+;Matriu d'escalat on es rota @a radians l'eix x 
+;La matriu està invertida per a major comoditat en els càlculs
+;--- Paràmetres ---
+;@a angle en radians
 (defun rotax (a)
     (list
     (list 1 0 0 0)
@@ -439,10 +439,10 @@
     (list 0 0 0 1))
 )
 
-;Matriz de escalado donde se rota @a radianes en el eje y 
-;La matriz esta invertida para mayor comodidad en los calculos
-;--- Paramametres ---
-;@a angulo en radianes
+;Matriu d'escalat on es rota @a radians l'eix y
+;La matriu està invertida per a major comoditat en els càlculs
+;--- Paràmetres ---
+;@a angle en radians
 (defun rotay (a)
     (list
         (list (cos a) 0 (sin a) 0)
@@ -451,10 +451,10 @@
         (list 0 0 0 1))
 )
 
-;Matriz de escalado donde se rota @a radianes en el eje z 
-;La matriz esta invertida para mayor comodidad en los calculos
-;--- Paramametres ---
-;@a angulo en radianes
+;Matriu d'escalat on es rota @a radians l'eix z 
+;La matriu està invertida per a major comoditat en els càlculs
+;--- Paràmetres ---
+;@a angle en radians
 (defun rotaz (a)
     (list 
     (list (cos a) (sin a) 0 0)
@@ -463,30 +463,30 @@
     (list 0 0 0 1))
 )
 
-;Función para calcular la nueva posición de la figura según sus parametros
-;--- Paramametres ---
-;@f objeto a ser cambiado
-;@x Movimiento en eje x
-;@y Movimiento en eje y
-;@z Movimiento en eje z
+;Funció per calcular la nova posició de la figura segons els @param (translació)
+;--- Paràmetres ---
+;@f figura a canviar
+;@x moviment sobre l'eix x
+;@y moviment sobre l'eix y
+;@z moviment sobre l'eix z
 (defun trasllada-figura (f x y z)
-    ;Para una mejor visualizacion borra la figura previamente y al final se volvera a visualizar
+    ;per a una millor visualització, borra la figura prèviament i la dibuixa de nou
     (cls-figura f) 
 
     (putprop f (multiplica-matriu (get f 'tmatriu) (translacio x y z)) 'tmatriu)
 
-    ;Volver a pintar
+    ;es torna a pintar la figura
     (pinta-figura f) 
 )
 
-;Función para calcular la nueva posición en rotación de la figura según sus parametros
-;--- Paramametres ---
-;@f objeto a ser cambiado
-;@x rotación en eje x
-;@y rotación en eje y
-;@z rotación en eje z
+;Funció per calcular la nova posició de la figura segons els @param (rotació)
+;--- Paràmetres ---
+;@f figura a canviar
+;@x rotación sobre l'eix x
+;@y rotación sobre l'eix y
+;@z rotación sobre l'eix z
 (defun rota-figura (f x y z)
-    ;Borra la figura previamente
+    ;borra la figura prèviament
     (cls-figura f) 
     
     (putprop f (multiplica-matriu
@@ -495,30 +495,30 @@
         (rotay y)) 
     (rotaz z)) 'tmatriu)
     
-    ;Volver a pintar
+    ;es torna a pintar la figura
     (pinta-figura f) 
 )
 
-;Función para calcular la nueva dimensión de la figura según sus parametros
-;--- Paramametres ---
-;@f objeto a ser cambiado
-;@x variación de tamaño x
-;@y variación de tamaño y
-;@z variación de tamaño z
+;Funció per calcular la nova posició de la figura segons els @param (escalat)
+;--- Paràmetres ---
+;@f figura a canviar
+;@x escalat sobre l'eix x
+;@y escalat sobre l'eix y
+;@z escalat sobre l'eix z
 (defun escala-figura (f x y z)
-    ;Borra la figura previamente
+    ;borra la figura prèviament
     (cls-figura f) 
 
     (putprop f (multiplica-matriu (get f 'tmatriu) (escalat x y z)) 'tmatriu)
 
-    ;Volver a pintar
+    ;es tornaa pintar la figura
     (pinta-figura f)
 )
 
-;Función que permite multiplicar matrices del mismo tamaño entre ellas
-;--- Paramametres ---
-;@m1 matriz de transformación del objeto
-;@m matriz de cambio con la nueva configuración
+;Funció que permet multiplicar dues matrius del mateix tamany
+;--- Paràmetres ---
+;@m1 matriu de transformació de la figura
+;@m2 matriu de canvi amb la nova configuració
 (defun multiplica-matriu (m1 m2)
     (cond 
         ((null (car m1)) nil)
@@ -526,40 +526,40 @@
     )
 )
 
-;Función que permite multiplicar un vector con una matriz
-;--- Paramametres ---
-;@v vector del objeto
-;@m matriz de cambio con la nueva configuración
+;Funció que permet multiplicar un vector amb una matriu
+;--- Paràmetres ---
+;@v vector de la figura
+;@m matriu de canvi amb la nova configuració
 (defun vector-matriu (v m) 
     (cond 
         ((null (car m)) nil)
         (t (cons (sum-list (mapcar '* v (car m))) (vector-matriu v (cdr m)))))
 )
 
-;Función que suma todos los componentes de una lista
-;--- Paramametres ---
-;@l lista
+;Funció que suma tots els components d'una llista
+;--- Paràmetres ---
+;@l llista
 (defun sum-list (l)
     (cond ((null (car l)) 0)
             (t (+ (car l) (sum-list (cdr l)))))
 )
 
-;Metode que printea a la adalt a la detra un text
-;--- Paramametres ---
-;@text texte
+;Mètode que imprimeix al cantó superior dret un text
+;--- Paràmetres ---
+;@text text
 (defun animacio-text (text)
     (goto-xy 70 0)
     (format t text)
     (cleol)
     (values)
 )
-;Metode que borra el texte de arriba la detra
+;Mètode que borra el texte del cantó superior dret
 (defun borra-text ()
     (goto-xy 70 0)
     (cleol)
 )
 
-;Metode que entra en mode animacio
+;Mode animació (translació, rotació i escalat animats)
 ;--- Paràmetres ---
 ;@f figura
 (defun animacio (f)
@@ -568,14 +568,14 @@
     (setq key(key-pressed '(114 116 113 101)))
     (cond 
         ((equal key 114) (anima-rotacio f))
-        ((equal key 116) (anima-traslacio f))
+        ((equal key 116) (anima-translacio f))
         ((equal key 101) (anima-escalat f))
         ((equal key 113) (animacio-text ""))
     )
 )
 
-;Metode que entra en mode rotacio.
-;Pitjant tecles es mou la figura
+;Mode rotació animada
+;Pitjant les fletxes es mou la figura
 ;--- Paràmetres ---
 ;@f figura
 (defun anima-rotacio (f)
@@ -593,27 +593,27 @@
         (pinta-figura f)
 )
 
-;Metode que entra en mode traslacio.
-;Pitjant tecles es mou la figura
+;Mode translació animada
+;Pitjant les fletxes es mou la figura
 ;--- Paràmetres ---
 ;@f figura
-(defun anima-traslacio (f)
-    (animacio-text "TRASLACIO")
+(defun anima-translacio (f)
+    (animacio-text "TRANSLACIO")
 
         (setq key(key-pressed '(331 333 328 336 113)))
         (cond 
-            ((equal key 331) (trasllada-figura f (- 0 2) 0 0)(anima-traslacio f))   ;izq
-            ((equal key 333) (trasllada-figura f 2 0 0)(anima-traslacio f))         ;der
-            ((equal key 328) (trasllada-figura f 0 2 0)(anima-traslacio f))         ;arriba
-            ((equal key 336) (trasllada-figura f 0 (- 0 2) 0)(anima-traslacio f))   ;abajo
+            ((equal key 331) (trasllada-figura f (- 0 2) 0 0)(anima-translacio f))   ;izq
+            ((equal key 333) (trasllada-figura f 2 0 0)(anima-translacio f))         ;der
+            ((equal key 328) (trasllada-figura f 0 2 0)(anima-translacio f))         ;arriba
+            ((equal key 336) (trasllada-figura f 0 (- 0 2) 0)(anima-translacio f))   ;abajo
             ((equal key 113) (animacio f))
         )
         (cls-figura f)
         (pinta-figura f)
 )
 
-;Metode que entra en mode escalat.
-;Pitjant tecles es mou la figura
+;Mode escalat animat
+;Pitjant les fletxes es mou la figura
 ;--- Paràmetres ---
 ;@f figura
 (defun anima-escalat (f)
