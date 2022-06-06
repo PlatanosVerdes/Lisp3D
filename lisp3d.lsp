@@ -194,7 +194,7 @@
 )
 
 ;Mirar si un element pertany a una llista
-;--- Paramametres ---
+;--- Paràmetres ---
 ;@e element
 ;@l llista
 (defun pertany (e l) 
@@ -641,7 +641,7 @@
     )
 )
 
-;Metode que comproba si un element 
+;Metode que comprova si un element 
 ;existeix dins una llista.
 ;--- Paràmetres ---
 ;@e element a comprobar
