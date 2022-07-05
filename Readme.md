@@ -35,24 +35,3 @@ Práctica que genera figuras en 3D, las cuales se les puede cambiar el color, es
 14. (rota-figura f x y z):          ✅
 15. (escala-figura f x y z):        ✅
 16. (inicia-figura f):              ✅
-
-## Alberto:
-- (translacio dx dy dz)             ✅
-- (escalat ex ey ez)                ✅
-- (rotax a)                         ✅
-- (rotay a)                         ✅
-- (rotaz a)                         ✅
-
-## Juan Carlos:
-- (pinta-figura f)                  ✅
-- (pinta-figures)                   ✅
-- (trasllada-figura f x y z)        ✅    
-- (rota-figura f x y z)             ✅
-- (escala-figura f x y z)           ✅    
-
-## Jorge:
-- (inicia-patrons)                  ✅
-- (borra-figura f)                  ✅ 
-- (borra-figures)                   ✅
-- (cls-figura f)                    ✅
-- (inicia-figura f)                 ✅
