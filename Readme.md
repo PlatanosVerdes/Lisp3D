@@ -2,7 +2,7 @@
 
 Práctica que genera figuras en 3D, las cuales se les puede cambiar el color, escalar, rotar y mover por toda la pantalla. También incluye un modo de animación en el que se pueden hacer todas las acciones anteriores interactuando con el teclado pulsando las flechas. Para más información ver este [archivo](https://github.com/PlatanosVerdes/Lisp3D/blob/main/Proposta%20Pr%C3%A0ctica%20LISP%202021-22.pdf).
 
-# METODOS EXTRA
+# MÉTODOS EXTRA
 
 - (get-figures):                Retorna la llista de figures de l'escena
 - (set-figures (e)):            Posa un element/llista a la propietat de figures 
@@ -16,7 +16,7 @@ Práctica que genera figuras en 3D, las cuales se les puede cambiar el color, es
 - (borra-f f l):                Borra un elemento de una lista
 
 
-# LISTA DE METODOS POR HACER
+# LISTA DE MÉTODOS POR HACER
 
 ## Listado general
 1. (inicia-patrons):                ✅
