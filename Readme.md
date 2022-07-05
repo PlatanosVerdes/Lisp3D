@@ -1,3 +1,7 @@
+# DESCRIPCIÓN
+
+Práctica que genera figuras en 3D, las cuales se les puede cambiar el color, escalar, rotar y mover por toda la pantalla. También incluye un modo de animación en el que se pueden hacer todas las acciones anteriores interactuando con el teclado pulsando las flechas. Para más información ver este [archivo:](https://github.com/PlatanosVerdes/Lisp3D/blob/main/Proposta%20Pr%C3%A0ctica%20LISP%202021-22.pdf).
+
 # METODOS EXTRA
 
 - (get-figures):                Retorna la llista de figures de l'escena
